@@ -256,11 +256,11 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         <p>Installiert KonviaSim, PLCSIM-Brücke, SPS-Git, Lagerverwaltung und SchaltWerk als fertige Pakete – ohne Entwicklungsumgebung, mit Startmenü-Eintrag – und zeigt, wenn es ein Update gibt.</p>
         <pre class="term"><span class="k">☰ Werkzeuge</span>
   KonviaSim       <span class="s">v0.14.0 aktuell</span>
-  Lagerverwaltung <span class="k">Update auf v0.3.0</span>
+  Lagerverwaltung <span class="k">Update auf v0.4.0</span>
   SchaltWerk      Installieren (v0.3.0)</pre>
       </div>
     </div>
-    <p class="note"><b>Einrichten ohne Anleitung:</b> Beim ersten Start führt ein Willkommens-Assistent durch alles – Claude-Anmeldung, Skills, TIA Portal mit Openness-Gruppe, TIA-Werkzeug, GitHub, Programme und erstes Projekt. Jeder Schritt zeigt, was fehlt, und erledigt es mit einem Klick; am System ändert sich nur etwas nach Rückfrage.</p>
+    <p class="note"><b>Einrichten ohne Anleitung:</b> Beim ersten Start führt ein Willkommens-Assistent durch alles – Claude-Anmeldung, Skills, TIA Portal mit Openness-Gruppe, TIA-Werkzeug, GitHub, Programme und erstes Projekt. Jeder Schritt zeigt, was fehlt, und erledigt es mit einem Klick; am System ändert sich nur etwas nach Rückfrage. Danach hält sich der SPS-Agent selbst aktuell: Er meldet neue Stände und aktualisiert sich mit einem Klick.</p>
     <p class="note">Dazu: neue Anlagenprojekte mit Vorlagen (<code>/neue-anlage</code>), Normcheck zu Maschinenverordnung, EN ISO 13849, EN 60204-1 u. a. (<code>/normcheck</code>), Sitzungen je Projekt, Anleitung in der App (F1). Läuft unter Windows und Linux.</p>
   </div>
 </section>
@@ -329,6 +329,9 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
           <p>Lagerverwaltung für Gassen mit Regalbediengerät: Fächer, Bestand, Artikel und Aufträge – angebunden an die echte SPS oder an KonviaSim.</p>
           <ul>
             <li>Ein-, Aus- und Umlagern, Einlagerstrategien, Inventur und Sperren</li>
+            <li><b>Für jede Anlage wiederverwendbar</b> – Konfiguration als lesbare <code>anlage.json</code>, Anlagenwahl, Vorlagen für die nächste Anlage</li>
+            <li><b>Absturzsicher</b> – ein Wächter startet nach Absturz oder Hänger neu und setzt offene Aufträge sicher fort, ohne einen Fahrauftrag doppelt zu schicken; automatische Sicherungen</li>
+            <li>Lageransicht mit zuschaltbaren Infos: Menge, Alter, Quelle und Ziel offener Aufträge, Füllgrad, Auftragsliste, RBG live</li>
             <li>Kopplung per OPC UA oder TCP-Telegramm, mit Lebenszeichen und Wiederverbinden</li>
             <li>Eingebautes Test-RBG zum Ausprobieren ohne Steuerung</li>
             <li>Einrichtungsassistent: Lager anlegen, Anbindung wählen, Verbindung testen, Probeauftrag</li>
