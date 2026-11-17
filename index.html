@@ -256,7 +256,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         <p>Installiert KonviaSim, PLCSIM-Brücke, SPS-Git, Lagerverwaltung und SchaltWerk als fertige Pakete – ohne Entwicklungsumgebung, mit Startmenü-Eintrag – und zeigt, wenn es ein Update gibt.</p>
         <pre class="term"><span class="k">☰ Werkzeuge</span>
   KonviaSim       <span class="s">v0.17.4 aktuell</span>
-  Lagerverwaltung <span class="k">Update auf v0.7.2</span>
+  Lagerverwaltung <span class="k">Update auf v0.7.4</span>
   SchaltWerk      Installieren (v0.3.0)</pre>
       </div>
     </div>
@@ -336,6 +336,8 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
             <li>Kopplung per OPC UA oder TCP-Telegramm, mit Lebenszeichen und Wiederverbinden; Telegramm-Verlauf je Gasse für die Fehlersuche an der SPS</li>
             <li><b>SPS-Neustart erkennen</b> – meldet die SPS „Anlauf“ mitten im Auftrag, wird er als Fehler gebucht und die Fächer als unklar markiert; Störung quittieren aus der Lagerverwaltung, gestartet wird an der Anlage; Position „unbekannt“, solange die SPS nach dem Anlauf ihre Referenzfahrt macht</li>
             <li><b>Hängenden Auftrag erkennen</b> – meldet die SPS „in Arbeit“ ohne laufenden Auftrag (z. B. nach erzwungenem Abbruch), nennt die Lagerverwaltung Auftragsnummer und Abhilfe statt nur „RBG nicht bereit“</li>
+            <li><b>Auftrag an der SPS abbrechen</b> – der Abbruch geht an die Steuerung und wird erst gebucht, wenn sie ihn bestätigt; liegt die Ladeeinheit schon auf dem RBG, werden die Fächer als unklar markiert</li>
+            <li><b>Störungsursache im Klartext</b> – meldet die SPS, warum das RBG steht (Antrieb, Verbindung, Positionssprung, Einlagerplatz, Übergabe …), steht der Grund direkt bei der Störung</li>
             <li><b>KI-Schnittstelle</b> – eine KI liest Zustand, Aufträge und Telegramme; bedienen darf sie nur nach ausdrücklicher Freigabe, jede Aktion steht im Protokoll</li>
             <li>Eingebautes Test-RBG zum Ausprobieren ohne Steuerung</li>
             <li>Einrichtungsassistent: Lager anlegen, Anbindung wählen, Verbindung testen, Probeauftrag</li>
