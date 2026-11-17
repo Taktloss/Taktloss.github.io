@@ -169,7 +169,100 @@ dialog.lightbox::backdrop { background:rgba(10,10,18,.82); backdrop-filter:blur(
 dialog.lightbox img { max-width:94vw; max-height:86vh; border-radius:12px; display:block; box-shadow:var(--shadow); }
 dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size:14px; }
 
+/* Bewegung beim Scrollen */
+.reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity:1; transform:none; }
+.progress { position:fixed; top:0; left:0; height:3px; width:0; z-index:30; background:linear-gradient(90deg,var(--mauve),var(--blue),var(--teal)); }
+nav.links a.aktiv { color:var(--text); box-shadow:inset 0 -2px 0 var(--mauve); }
+.hero::after { content:""; position:absolute; width:420px; height:420px; border-radius:50%; left:var(--mx,20%); top:var(--my,20%); transform:translate(-50%,-50%); pointer-events:none;
+  background:radial-gradient(circle, color-mix(in srgb,var(--mauve) 16%,transparent), transparent 65%); transition:left .25s ease-out, top .25s ease-out; }
+.hero-shot img:first-child { transition:transform .4s ease; }
+.hero-shot:hover img:first-child { transform:perspective(900px) rotateY(-3deg) rotateX(2deg); }
+.hero-shot .float { animation:schweben 6s ease-in-out infinite; }
+@keyframes schweben { 50% { transform:translateY(-10px); } }
+pre.term .cursor { display:inline-block; width:.55em; background:var(--mauve); animation:blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity:0; } }
+
+/* Filter */
+.filter { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:-18px 0 26px; }
+.filter button { font:inherit; font-size:14px; border:1px solid var(--surface1); background:var(--mantle); color:var(--subtext); border-radius:999px; padding:4px 14px; cursor:pointer; }
+.filter button:hover { border-color:var(--mauve); color:var(--text); }
+.filter button.on { background:var(--mauve); border-color:var(--mauve); color:var(--on-accent); }
+.filter-n { font-size:13px; color:var(--overlay); margin-left:6px; }
+.card.weg { display:none; }
+
+/* Zusammenspiel: Datenfluss */
+.arrow { position:relative; }
+.arrow .wire { display:block; height:2px; width:70px; margin:4px auto; background:linear-gradient(90deg,transparent,var(--mauve),transparent) 0 0/40% 100% no-repeat, var(--surface1);
+  animation:fluss 1.8s linear infinite; }
+@keyframes fluss { from { background-position:-40% 0, 0 0; } to { background-position:140% 0, 0 0; } }
+.node { transition:transform .2s, border-color .2s; }
+.node:hover { transform:translateY(-3px); border-color:var(--mauve); }
+
+/* Demo */
+.demo { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:22px; }
+.demo-main, .demo-side { background:var(--mantle); border:1px solid var(--surface0); border-radius:18px; padding:18px; min-width:0; }
+.demo-bar { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+.seg { display:inline-flex; border:1px solid var(--surface1); border-radius:10px; overflow:hidden; }
+.seg button { font:inherit; font-size:14px; border:0; background:transparent; color:var(--subtext); padding:6px 14px; cursor:pointer; }
+.seg button + button { border-left:1px solid var(--surface1); }
+.seg button.on { background:var(--mauve); color:var(--on-accent); }
+.seg button:disabled { cursor:not-allowed; opacity:.6; }
+.demo-hint { font-size:14px; color:var(--subtext); }
+.rack { position:relative; display:grid; grid-template-columns:1.3fr repeat(10,1fr); grid-template-rows:repeat(5,44px); gap:4px; padding:6px 6px 14px;
+  background:linear-gradient(var(--surface1),var(--surface1)) bottom 6px left 6px/calc(100% - 12px) 3px no-repeat, var(--crust); border-radius:12px; }
+.fach { position:relative; border:1px solid var(--surface0); border-radius:6px; background:var(--base); cursor:pointer; padding:0; font:inherit; font-size:10px; color:var(--overlay); }
+.fach:hover:not(:disabled) { border-color:var(--mauve); }
+.fach:focus-visible { outline:2px solid var(--blue); outline-offset:1px; }
+.fach:disabled { cursor:default; }
+.fach.voll::after, .platz.voll::after { content:""; position:absolute; inset:9px 7px; border-radius:4px; background:var(--peach); box-shadow:inset 0 -3px 0 color-mix(in srgb,#000 18%,transparent); }
+.fach.quelle { border-color:var(--blue); box-shadow:0 0 0 2px var(--blue); }
+.fach.ziel { border-color:var(--green); box-shadow:0 0 0 2px var(--green); }
+.fach.unklar { background:repeating-linear-gradient(45deg,var(--base) 0 6px,color-mix(in srgb,var(--yellow) 25%,var(--base)) 6px 12px); }
+.platz { position:relative; border:1px dashed var(--surface2); border-radius:6px; font-size:10px; color:var(--subtext); display:grid; place-items:start center; padding-top:2px; }
+.leerzone { border-radius:6px; }
+.rbg { position:absolute; z-index:2; left:6px; top:6px; bottom:14px; width:calc((100% - 12px - 40px) / 11.3 * 1.3); pointer-events:none;
+  transform:translateX(var(--px,0px)); transition:transform var(--t,.3s) linear; }
+.rbg .mast { position:absolute; left:50%; top:-4px; bottom:-8px; width:6px; margin-left:-3px; background:var(--overlay); border-radius:3px; }
+.rbg .wagen { position:absolute; left:4px; right:4px; height:44px; bottom:calc(var(--py,0) * 48px); transition:bottom var(--t,.3s) linear;
+  border:2px solid var(--mauve); border-radius:7px; background:color-mix(in srgb,var(--mauve) 14%,transparent); }
+.rbg .gabel { position:absolute; left:50%; bottom:5px; width:60%; height:4px; margin-left:-30%; background:var(--mauve); border-radius:2px; transition:transform .35s; }
+.rbg .wagen.aus .gabel { transform:scaleX(1.5); }
+.rbg .le { position:absolute; inset:9px 7px; border-radius:4px; background:var(--peach); opacity:0; transform:scale(.6); transition:opacity .3s, transform .3s; }
+.rbg .wagen.beladen .le { opacity:1; transform:none; }
+.rbg .wagen.stoer { border-color:var(--red); animation:stoer 1s steps(1) infinite; }
+@keyframes stoer { 50% { background:color-mix(in srgb,var(--red) 30%,transparent); } }
+.demo-legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12.5px; color:var(--subtext); margin-top:10px; align-items:center; }
+.demo-legend i { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:5px; vertical-align:-2px; }
+.lg-voll { background:var(--peach); } .lg-leer { border:1px solid var(--surface2); } .lg-q { box-shadow:0 0 0 2px var(--blue); } .lg-z { box-shadow:0 0 0 2px var(--green); }
+.demo-pos { margin-left:auto; font-family:"Cascadia Code",Consolas,monospace; color:var(--text); }
+.demo-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+.demo-actions .btn { height:40px; font-size:14px; cursor:pointer; font-family:inherit; border:0; }
+.demo-actions .btn.ghost { border:1px solid var(--surface1); }
+.demo-actions .btn:disabled { opacity:.45; cursor:not-allowed; filter:none; }
+kbd { font-family:"Cascadia Code",Consolas,monospace; font-size:11px; border:1px solid currentColor; border-radius:4px; padding:0 4px; opacity:.7; }
+.statusbox { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.statusbox div { background:var(--base); border:1px solid var(--surface0); border-radius:10px; padding:8px 12px; }
+.statusbox span { display:block; font-size:12px; color:var(--overlay); }
+.statusbox b { font-size:16px; }
+.statusbox b.blitz { animation:blitz .6s; }
+@keyframes blitz { from { color:var(--mauve); } }
+.bytes { margin:12px 0; font-size:12px; color:var(--overlay); }
+.bytes code { display:block; margin-top:4px; color:var(--text); word-spacing:2px; overflow-wrap:anywhere; }
+.tlog { list-style:none; margin:0; padding:0; height:260px; overflow:auto; font-family:"Cascadia Code",Consolas,monospace; font-size:12px; display:flex; flex-direction:column; gap:3px;
+  border-top:1px solid var(--surface0); padding-top:10px; }
+.tlog li { color:var(--subtext); animation:rein .3s ease; }
+.tlog li b { font-weight:600; }
+.tlog .lvs b { color:var(--blue); } .tlog .rbg-m b { color:var(--teal); } .tlog .err b, .tlog .err { color:var(--red); } .tlog .ok b { color:var(--green); }
+@keyframes rein { from { opacity:0; transform:translateX(-6px); } }
+
+/* Bildbetrachter */
+.lb-nav, .lb-close { position:fixed; border:0; background:rgba(30,30,46,.7); color:#cdd6f4; cursor:pointer; border-radius:999px; font-size:26px; width:44px; height:44px; display:grid; place-items:center; }
+.lb-nav:hover, .lb-close:hover { background:rgba(203,166,247,.85); color:#11111b; }
+.lb-prev { left:18px; top:50%; } .lb-next { right:18px; top:50%; } .lb-close { right:18px; top:18px; font-size:18px; }
+
 @media (max-width:920px) {
+  .demo { grid-template-columns:minmax(0,1fr); }
   .hero .wrap, .feature { grid-template-columns:minmax(0,1fr); }
   .hero { padding:56px 0 64px; }
   .hero-shot .float { right:8px; }
@@ -183,11 +276,14 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
 }
 @media (max-width:520px) {
   .wrap { padding:0 16px; }
+  .rack { grid-template-rows:repeat(5,34px); gap:2px; }
+  .rbg .wagen { height:34px; bottom:calc(var(--py,0) * 36px); }
+  .demo-pos { margin-left:0; }
   .gallery { grid-template-columns:repeat(2,1fr); }
   .gallery button.wide { grid-column:span 2; }
   .theme-btn { margin-left:auto; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition:none !important; scroll-behavior:auto !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; scroll-behavior:auto !important; animation:none !important; } .reveal { opacity:1; transform:none; } }
 </style>
 </head>
 <body>
@@ -199,6 +295,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
       <a href="#sps-agent">SPS-Agent</a>
       <a href="#konviasim">KonviaSim</a>
       <a href="#werkzeuge">Werkzeuge</a>
+      <a href="#demo">Ausprobieren</a>
       <a href="#zusammenspiel">Zusammenspiel</a>
       <a href="#installieren">Installieren</a>
     </nav>
@@ -219,7 +316,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         <a class="btn ghost" href="#werkzeuge">Alle Werkzeuge</a>
       </div>
       <div class="stats">
-        <div><b>8</b>Werkzeuge</div>
+        <div><b data-count="9">9</b>Werkzeuge</div>
         <div><b>2D + 3D</b>Anlagensimulation</div>
         <div><b>1 Klick</b>Installieren</div>
         <div><b>Windows · Linux</b>wo es geht</div>
@@ -255,8 +352,8 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         <h3>Programme</h3>
         <p>Installiert KonviaSim, PLCSIM-Brücke, SPS-Git, Lagerverwaltung und SchaltWerk als fertige Pakete – ohne Entwicklungsumgebung, mit Startmenü-Eintrag – und zeigt, wenn es ein Update gibt.</p>
         <pre class="term"><span class="k">☰ Werkzeuge</span>
-  KonviaSim       <span class="s">v0.17.4 aktuell</span>
-  Lagerverwaltung <span class="k">Update auf v0.7.4</span>
+  KonviaSim       <span class="s">v0.17.5 aktuell</span>
+  Lagerverwaltung <span class="k">Update auf v0.7.5</span>
   SchaltWerk      Installieren (v0.3.0)</pre>
       </div>
     </div>
@@ -306,9 +403,17 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
   <div class="wrap">
     <h2>Werkzeuge</h2>
     <p class="sub">Jedes Werkzeug funktioniert für sich – zusammen decken sie den Weg vom SPS-Programm bis zur laufenden Anlage ab.</p>
+    <div class="filter" role="group" aria-label="Werkzeuge filtern">
+      <button type="button" class="on" data-filter="alle" aria-pressed="true">Alle</button>
+      <button type="button" data-filter="nutzbar" aria-pressed="false">Nutzbar</button>
+      <button type="button" data-filter="neu" aria-pressed="false">Neu</button>
+      <button type="button" data-filter="arbeit" aria-pressed="false">In Arbeit</button>
+      <button type="button" data-filter="erweiterung spezifikation" aria-pressed="false">Erweiterung &amp; Spezifikation</button>
+      <span class="filter-n" aria-live="polite"></span>
+    </div>
     <div class="cards">
 
-      <article class="card">
+      <article class="card" data-tags="nutzbar">
         <button class="shot" data-cap="SPS-Git: Änderungen am SPS-Programm lesbar als Logik statt XML"><img src="img/spsgit-aenderungen.webp" alt="SPS-Git zeigt eine Änderung in einem Baustein" loading="lazy"></button>
         <div class="body">
           <h3><img src="img/spsgit.svg" alt="">SPS-Git <span class="tag green">nutzbar</span></h3>
@@ -323,10 +428,10 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-tags="neu">
         <button class="shot" data-cap="Lagerverwaltung: Regalansicht einer Gasse mit Belegung, Sperren und offenen Aufträgen"><img src="img/lagerverwaltung.webp" alt="Lagerverwaltung mit Regalansicht" loading="lazy"></button>
         <div class="body">
-          <h3>Lagerverwaltung <span class="tag peach">neu</span></h3>
+          <h3><img src="img/lagerverwaltung.svg" alt="">Lagerverwaltung <span class="tag peach">neu</span></h3>
           <p>Lagerverwaltung für Gassen mit Regalbediengerät: Fächer, Bestand, Artikel und Aufträge – angebunden an die echte SPS oder an KonviaSim.</p>
           <ul>
             <li>Ein-, Aus- und Umlagern, Einlagerstrategien, Inventur und Sperren</li>
@@ -347,7 +452,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-tags="neu">
         <button class="shot" data-cap="SchaltWerk: Stromlaufplan mit Prüfstatus, Projekt-Navigator und Plankontrolle (Beispielprojekt)"><img src="img/schaltwerk.webp" alt="SchaltWerk mit Stromlaufplan und Prüfansicht" loading="lazy"></button>
         <div class="body">
           <h3>SchaltWerk <span class="tag peach">neu</span></h3>
@@ -362,7 +467,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-tags="arbeit">
         <div class="shot code"><pre class="term"><span class="c">$ spsanalyzer analyse export/</span>
 <span class="k">FB 3</span> Foerderband · NW2
   <span class="r">Warnung</span>  Mehrfachzuweisung von #Motor
@@ -381,7 +486,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-tags="nutzbar">
         <div class="shot code"><pre class="term"><span class="k">/neue-anlage</span> Testanlage
 <span class="c">  Ordner, Repos, Vorlagen angelegt</span>
 <span class="k">/sim-test</span> V-01 V-05
@@ -400,7 +505,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" data-tags="erweiterung">
         <div class="shot code"><pre class="term"><span class="c">// KI-Assistent ↔ TIA Portal</span>
 <span class="k">GetBlockInfo</span>  PLC_1 / FB 12 "Bahn"
 <span class="k">GetTagTableInfo</span>  Eingänge
@@ -418,7 +523,26 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         </div>
       </article>
 
-      <article class="card wide">
+      <article class="card" data-tags="nutzbar">
+        <div class="shot code"><pre class="term"><span class="c">// FUP-Generator → TIA Portal</span>
+<span class="k">python</span> fup/rbg.py fb-ablauf
+<span class="s">  ✓ FB_Auftragsablauf · 0 Fehler</span>
+<span class="k">Programmstand</span> 8 · an das LVS gemeldet
+<span class="r">Störung</span> Ursache 7 – Fahrzeit überschritten</pre></div>
+        <div class="body">
+          <h3>RBG-Steuerung <span class="tag green">nutzbar</span></h3>
+          <p>Die SPS-Seite zur Lagerverwaltung: Steuerung eines Regalbediengeräts für S7-1500F, komplett in FUP – erzeugt aus einem Python-Generator statt von Hand geklickt.</p>
+          <ul>
+            <li>Fahren, Heben und Gabel über Positionsschalter, Referenzfahrt nach jedem Neustart</li>
+            <li>Fachkontrolle, Wartezeit am Einlagerplatz, Abbruch vom LVS, Störungsursache im Klartext</li>
+            <li>Überwachung von Positionssprung, Fahr- und Gabelzeit – einstellbar und abschaltbar</li>
+            <li>Gegen KonviaSim und PLCSIM getestet, jeder Stand mit Programmnummer</li>
+          </ul>
+          <div class="meta"><span class="chip">S7-1500F</span><span class="chip">FUP</span><span class="chip">Python</span><span class="chip">TCP</span></div>
+        </div>
+      </article>
+
+      <article class="card wide" data-tags="spezifikation">
         <div class="shot code"><pre class="term"><span class="c"># Telegramm 20 Byte, 10 × INT Big-Endian</span>
 <span class="k">LVS → RBG</span>  1 · Gasse 2 · Auslagern · Nr 815 · Fach 3/2/1
 <span class="k">RBG → LVS</span>  2 · Gasse 2 · Status <span class="s">2 fertig</span> · Quittung 815
@@ -429,7 +553,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
           <ul>
             <li>Auftrag, Fach, Quittung, Status und Fehlercodes als INT</li>
             <li>OPC UA mit Int16/Boolean-Variablen, anonym oder verschlüsselt</li>
-            <li>Abwärtskompatibel erweitert: Anlauf-Bit, Programmstand der SPS, Quittieren (Typ 3)</li>
+            <li>Abwärtskompatibel erweitert: Anlauf-Bit, Programmstand der SPS, Quittieren (Typ 3), Abbrechen (Typ 4), Störungsursache</li>
             <li>Brücke für entfernte PLCSIM-Rechner</li>
           </ul>
           <div class="meta"><span class="chip">OPC UA</span><span class="chip">TCP</span><span class="chip">S7-kompatibel</span></div>
@@ -440,15 +564,55 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
   </div>
 </section>
 
+<section id="demo">
+  <div class="wrap">
+    <h2>Ausprobieren: Lager und SPS im Gespräch</h2>
+    <p class="sub">Eine kleine Nachbildung zum Anklicken: Die Lagerverwaltung schickt einen Auftrag als 20-Byte-Telegramm, das Regalbediengerät fährt und meldet Status, Position und Fehlercodes zurück – genau wie die echte Schnittstelle.</p>
+    <div class="demo">
+      <div class="demo-main">
+        <div class="demo-bar">
+          <div class="seg" role="radiogroup" aria-label="Auftragsart">
+            <button type="button" role="radio" aria-checked="true" data-art="1" class="on">Einlagern</button>
+            <button type="button" role="radio" aria-checked="false" data-art="2">Auslagern</button>
+            <button type="button" role="radio" aria-checked="false" data-art="3">Umlagern</button>
+          </div>
+          <span class="demo-hint" id="demoHint">Leeres Fach als Ziel anklicken</span>
+        </div>
+        <div class="rack" id="rack" aria-label="Regal: 10 Spalten, 5 Ebenen, links die Vorzone mit Ein- und Auslagerplatz">
+          <div class="rbg" id="rbg" aria-hidden="true"><div class="mast"></div><div class="wagen" id="wagen"><div class="gabel"></div><div class="le"></div></div></div>
+        </div>
+        <div class="demo-legend"><span><i class="lg-voll"></i>belegt</span><span><i class="lg-leer"></i>frei</span><span><i class="lg-q"></i>Quelle</span><span><i class="lg-z"></i>Ziel</span><span class="demo-pos" id="demoPos">RBG: Spalte 0 · Ebene 1</span></div>
+        <div class="demo-actions">
+          <button type="button" class="btn primary" id="demoSend" disabled title="Auftrag senden (Enter)">Auftrag senden <kbd>Enter</kbd></button>
+          <button type="button" class="btn ghost" id="demoAbort" disabled title="Laufenden Auftrag abbrechen (Esc)">Abbrechen <kbd>Esc</kbd></button>
+          <button type="button" class="btn ghost" id="demoQuit" hidden title="Störung quittieren">Quittieren</button>
+          <button type="button" class="btn ghost" id="demoReset" title="Lager und Protokoll zurücksetzen">Neu beginnen</button>
+        </div>
+      </div>
+      <div class="demo-side">
+        <div class="statusbox" id="statusBox" aria-live="polite">
+          <div><span>Status</span><b id="stStatus">0 bereit</b></div>
+          <div><span>Quittung</span><b id="stQuit">–</b></div>
+          <div><span>Fehlercode</span><b id="stFehler">0</b></div>
+          <div><span>Störung</span><b id="stStoer">–</b></div>
+        </div>
+        <div class="bytes" aria-label="Letztes Telegramm als Bytes"><span id="bytesDir">Noch kein Telegramm</span><code id="bytesHex">·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ·· ··</code></div>
+        <ol class="tlog" id="tlog" aria-label="Telegramm-Verlauf"></ol>
+      </div>
+    </div>
+    <p class="note">Zum Ausprobieren: ein volles Fach als Einlagerziel (Fehler 1 „Fach belegt“), ein leeres als Auslagerquelle (Fehler 2 „Fach leer“) oder <i>Abbrechen</i>, während die Gabel beladen ist (9/6 mit Störung „Auftrag mit Ladeeinheit abgebrochen“). Vereinfacht: eine Regalseite, keine echten Zeiten.</p>
+  </div>
+</section>
+
 <section class="alt" id="zusammenspiel">
   <div class="wrap">
     <h2>Zusammenspiel</h2>
     <p class="sub">Programmieren in TIA, versionieren mit SPS-Git, testen am digitalen Zwilling, Schaltplan dazu – und der SPS-Agent hält alles zusammen.</p>
     <div class="flow" role="img" aria-label="TIA Portal und SPS-Programm, verbunden mit PLCSIM, KonviaSim und Lagerverwaltung">
       <div class="node"><b>TIA Portal</b><span>SPS-Programm</span></div>
-      <div class="arrow"><b>⇄</b>PLCSIM</div>
+      <div class="arrow"><b>⇄</b><span class="wire"></span>PLCSIM</div>
       <div class="node main"><b>KonviaSim</b><span>Anlage in 2D/3D</span></div>
-      <div class="arrow"><b>⇄</b>OPC UA · TCP</div>
+      <div class="arrow"><b>⇄</b><span class="wire"></span>OPC UA · TCP</div>
       <div class="node"><b>Lagerverwaltung</b><span>Aufträge, Bestand</span></div>
     </div>
     <div class="flow-under">
@@ -485,7 +649,13 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
   </div>
 </footer>
 
-<dialog class="lightbox" id="lightbox"><img alt=""><p></p></dialog>
+<dialog class="lightbox" id="lightbox" aria-label="Bildbetrachter">
+  <button type="button" class="lb-nav lb-prev" aria-label="Vorheriges Bild (Pfeil links)" title="Vorheriges Bild (←)">‹</button>
+  <img alt=""><p></p>
+  <button type="button" class="lb-nav lb-next" aria-label="Nächstes Bild (Pfeil rechts)" title="Nächstes Bild (→)">›</button>
+  <button type="button" class="lb-close" aria-label="Schließen (Esc)" title="Schließen (Esc)">✕</button>
+</dialog>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <script>
 // Hell/Dunkel: System → Hell → Dunkel, gemerkt im Browser
@@ -505,17 +675,298 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
   });
   apply();
 })();
-// Bildbetrachter
+const RUHIG = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Bildbetrachter mit Blättern (← →), Esc schließt
 (function () {
   const box = document.getElementById('lightbox'), img = box.querySelector('img'), cap = box.querySelector('p');
-  document.querySelectorAll('[data-cap]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      const i = b.querySelector('img');
-      img.src = i.src; img.alt = i.alt; cap.textContent = b.dataset.cap;
-      box.showModal();
+  const bilder = Array.from(document.querySelectorAll('[data-cap]')).filter(function (b) { return b.querySelector('img'); });
+  let nr = 0;
+  function zeige(i) {
+    nr = (i + bilder.length) % bilder.length;
+    const b = bilder[nr], q = b.querySelector('img');
+    img.src = q.src; img.alt = q.alt; cap.textContent = b.dataset.cap + '  ·  ' + (nr + 1) + ' / ' + bilder.length;
+  }
+  bilder.forEach(function (b, i) { b.addEventListener('click', function () { zeige(i); box.showModal(); }); });
+  box.querySelector('.lb-prev').addEventListener('click', function (e) { e.stopPropagation(); zeige(nr - 1); });
+  box.querySelector('.lb-next').addEventListener('click', function (e) { e.stopPropagation(); zeige(nr + 1); });
+  box.querySelector('.lb-close').addEventListener('click', function () { box.close(); });
+  box.addEventListener('click', function (e) { if (e.target === box || e.target === img) box.close(); });
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') zeige(nr - 1);
+    if (e.key === 'ArrowRight') zeige(nr + 1);
+  });
+})();
+
+// Scroll: Fortschritt, aktiver Menüpunkt, Einblenden
+(function () {
+  const bar = document.getElementById('progress');
+  const links = Array.from(document.querySelectorAll('nav.links a'));
+  const ziele = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function scroll() {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+    let aktiv = -1;
+    ziele.forEach(function (z, i) { if (z && z.getBoundingClientRect().top < innerHeight * .35) aktiv = i; });
+    links.forEach(function (a, i) { a.classList.toggle('aktiv', i === aktiv); });
+  }
+  addEventListener('scroll', scroll, { passive: true }); scroll();
+  if (RUHIG || !('IntersectionObserver' in window)) return;
+  const teile = document.querySelectorAll('section h2, section .sub, .agent-grid .pane, .card, .steps li, .node, .demo, .gallery, ul.checks li');
+  const io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  teile.forEach(function (t, i) {
+    if (t.getBoundingClientRect().top < innerHeight) return;   // schon sichtbar: nicht verstecken
+    t.classList.add('reveal'); t.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(t);
+  });
+})();
+
+// Lichtschein im Kopf folgt der Maus
+(function () {
+  const hero = document.querySelector('.hero');
+  if (RUHIG) return;
+  hero.addEventListener('pointermove', function (e) {
+    const r = hero.getBoundingClientRect();
+    hero.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+})();
+
+// Zahlen hochzählen und Terminals tippen, sobald sichtbar
+(function () {
+  if (RUHIG || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const el = e.target;
+      if (el.dataset.count) {
+        const ziel = +el.dataset.count, t0 = performance.now();
+        (function lauf(t) { const k = Math.min(1, (t - t0) / 900); el.textContent = Math.round(ziel * k * (2 - k)); if (k < 1) requestAnimationFrame(lauf); })(t0);
+      } else {
+        const zeilen = el.dataset.html.split('\n');
+        let i = 0; el.innerHTML = '<span class="cursor">&nbsp;</span>';
+        (function weiter() {
+          i++;
+          el.innerHTML = zeilen.slice(0, i).join('\n') + (i < zeilen.length ? '\n<span class="cursor">&nbsp;</span>' : '');
+          if (i < zeilen.length) setTimeout(weiter, 420);
+        })();
+      }
+    });
+  }, { threshold: .6 });
+  document.querySelectorAll('[data-count]').forEach(function (el) { io.observe(el); });
+  document.querySelectorAll('.agent-grid pre.term, .card .shot.code pre.term').forEach(function (el) {
+    el.dataset.html = el.innerHTML; el.style.minHeight = el.offsetHeight + 'px'; io.observe(el);
+  });
+})();
+
+// Werkzeuge filtern
+(function () {
+  const knoepfe = document.querySelectorAll('.filter button'), karten = document.querySelectorAll('#werkzeuge .card'), n = document.querySelector('.filter-n');
+  knoepfe.forEach(function (k) {
+    k.addEventListener('click', function () {
+      const f = k.dataset.filter.split(' ');
+      let sichtbar = 0;
+      knoepfe.forEach(function (x) { x.classList.toggle('on', x === k); x.setAttribute('aria-pressed', x === k); });
+      karten.forEach(function (c) {
+        const ok = f[0] === 'alle' || f.indexOf(c.dataset.tags) >= 0;
+        c.classList.toggle('weg', !ok); if (ok) sichtbar++;
+      });
+      n.textContent = f[0] === 'alle' ? '' : sichtbar + ' von ' + karten.length;
     });
   });
-  box.addEventListener('click', function () { box.close(); });
+})();
+
+// Demo: Lagerverwaltung und RBG tauschen Telegramme
+(function () {
+  const rack = document.getElementById('rack'), rbg = document.getElementById('rbg'), wagen = document.getElementById('wagen');
+  const $ = function (id) { return document.getElementById(id); };
+  const hint = $('demoHint'), send = $('demoSend'), abort = $('demoAbort'), quit = $('demoQuit'), reset = $('demoReset');
+  const tlog = $('tlog'), segs = document.querySelectorAll('.seg button');
+  const STATUS = { 0: '0 bereit', 1: '1 in Arbeit', 2: '2 fertig', 9: '9 Fehler' };
+  const FEHLER = { 0: '0', 1: '1 Fach belegt', 2: '2 Fach leer', 6: '6 abgebrochen' };
+  const START = [[1,1],[2,1],[2,3],[3,2],[4,4],[5,1],[6,2],[6,5],[7,3],[8,1],[9,4],[10,2],[10,5]];
+  let fach = {}, ein, aus, art = 1, quelle = null, ziel = null, laeuft = false, abbruch = false, stoerung = 0;
+  let pos = [0, 1], beladen = false, nr = 814, zaehler = 0, st = { status: 0, quit: 0, fehler: 0 };
+  const zellen = {};
+
+  // Raster aufbauen: Spalte 0 = Vorzone (Ein-/Auslagerplatz auf Ebene 1)
+  for (let e = 5; e >= 1; e--) for (let c = 0; c <= 10; c++) {
+    let el;
+    if (c === 0) {
+      el = document.createElement('div');
+      if (e === 1) { el.className = 'platz'; el.innerHTML = 'E · A'; }
+      else if (e === 2) { el.className = 'platz'; el.textContent = 'Vorzone'; el.style.border = '0'; }
+      else el.className = 'leerzone';
+    } else {
+      el = document.createElement('button'); el.type = 'button'; el.className = 'fach';
+      el.title = 'Spalte ' + c + ', Ebene ' + e; el.setAttribute('aria-label', el.title);
+      el.addEventListener('click', function () { waehle(c, e); });
+    }
+    el.style.gridColumn = c + 1; el.style.gridRow = 6 - e;
+    rack.appendChild(el); zellen[c + '/' + e] = el;
+  }
+  const platz = zellen['0/1'];
+
+  function neu() {
+    fach = {}; START.forEach(function (x) { fach[x[0] + '/' + x[1]] = true; });
+    ein = true; aus = false; quelle = ziel = null; stoerung = 0; beladen = false; pos = [0, 1];
+    st = { status: 0, quit: 0, fehler: 0 }; tlog.innerHTML = '';
+    document.querySelectorAll('.fach.unklar').forEach(function (z) { z.classList.remove('unklar'); });
+    wagen.className = 'wagen'; quit.hidden = true; fahrBild(0); zeichne(); zeigeStatus();
+    log('lvs', 'Lagerverwaltung', 'verbunden · Lebenszeichen jede Sekunde (Typ 0)');
+  }
+  function zeichne() {
+    for (const k in zellen) {
+      const z = zellen[k]; if (!z.classList.contains('fach')) continue;
+      z.classList.toggle('voll', !!fach[k]);
+      z.classList.toggle('quelle', quelle === k); z.classList.toggle('ziel', ziel === k);
+      z.disabled = laeuft || stoerung > 0;
+    }
+    platz.classList.toggle('voll', ein);
+    platz.innerHTML = 'E · A' + (aus ? ' ▸' : '');
+    segs.forEach(function (b) { b.disabled = laeuft || stoerung > 0; });
+    const fertig = art === 1 ? ziel : art === 2 ? quelle : quelle && ziel;
+    send.disabled = laeuft || stoerung > 0 || !fertig;
+    abort.disabled = !laeuft; reset.disabled = laeuft;
+    if (!laeuft && !stoerung) hint.textContent =
+      art === 1 ? (ziel ? 'Ziel ' + ziel.replace('/', ' / ') + ' – Auftrag senden' : 'Fach als Ziel anklicken (Quelle: Einlagerplatz)')
+      : art === 2 ? (quelle ? 'Quelle ' + quelle.replace('/', ' / ') + ' – Auftrag senden' : 'Fach als Quelle anklicken (Ziel: Auslagerplatz)')
+      : (!quelle ? 'Erst Quelle, dann Ziel anklicken' : !ziel ? 'Quelle ' + quelle.replace('/', ' / ') + ' – jetzt das Ziel' : 'Umlagern ' + quelle.replace('/', ' / ') + ' → ' + ziel.replace('/', ' / '));
+  }
+  function waehle(c, e) {
+    const k = c + '/' + e;
+    if (art === 1) ziel = k; else if (art === 2) quelle = k;
+    else if (!quelle || ziel) { quelle = k; ziel = null; } else if (k !== quelle) ziel = k;
+    zeichne();
+  }
+  segs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      art = +b.dataset.art; quelle = ziel = null;
+      segs.forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', x === b); });
+      zeichne();
+    });
+  });
+
+  function hex(w) { return w.map(function (v) { v &= 0xFFFF; return ('0' + (v >> 8).toString(16)).slice(-2) + ' ' + ('0' + (v & 255).toString(16)).slice(-2); }).join(' ').toUpperCase(); }
+  function log(kl, wer, txt) {
+    const li = document.createElement('li'); li.className = kl;
+    li.innerHTML = '<b>' + wer + '</b> ' + txt; tlog.appendChild(li); tlog.scrollTop = tlog.scrollHeight;
+  }
+  function telegramm(w, richtung) { $('bytesDir').textContent = richtung + ' · Typ ' + w[0] + ' · 20 Byte'; $('bytesHex').textContent = hex(w); }
+  function zeigeStatus() {
+    [['stStatus', STATUS[st.status]], ['stQuit', st.quit || '–'], ['stFehler', FEHLER[st.fehler] || st.fehler],
+     ['stStoer', stoerung ? 'Ursache ' + stoerung + ' – mit LE abgebrochen' : '–']].forEach(function (x) {
+      const b = $(x[0]); if (b.textContent !== String(x[1])) { b.textContent = x[1]; b.classList.remove('blitz'); void b.offsetWidth; b.classList.add('blitz'); }
+    });
+    $('demoPos').textContent = 'RBG: Spalte ' + pos[0] + ' · Ebene ' + pos[1] + (beladen ? ' · beladen' : '');
+  }
+  function status(kl, txt) {
+    zaehler = (zaehler + 1) & 0x7FFF;
+    const bits = (laeuft || stoerung ? 0 : 1) | (stoerung ? 2 : 0) | (ein ? 4 : 0) | (aus ? 0 : 8) | (stoerung << 8);
+    const w = [2, 1, st.status, st.quit, st.fehler, pos[0], pos[1], bits, 8, zaehler];
+    telegramm(w, 'RBG → LVS'); zeigeStatus();
+    if (txt) log(kl || 'rbg-m', 'RBG → LVS', txt);
+  }
+  const warte = function (ms) { return new Promise(function (r) { setTimeout(r, RUHIG ? 0 : ms); }); };
+  function fahrBild(ms) {
+    const z = zellen[pos[0] + '/' + pos[1]];
+    rbg.style.setProperty('--t', (RUHIG ? 0 : ms) + 'ms');
+    rbg.style.width = z.offsetWidth + 'px';
+    rbg.style.transform = 'translateX(' + (z.offsetLeft - 6) + 'px)';
+    wagen.style.height = z.offsetHeight + 'px';
+    wagen.style.bottom = (rbg.offsetHeight - (z.offsetTop - 6) - z.offsetHeight) + 'px';
+  }
+  addEventListener('resize', function () { fahrBild(0); });
+  async function fahre(c, e) {
+    while (pos[0] !== c || pos[1] !== e) {
+      if (abbruch) return false;
+      if (pos[0] !== c) pos[0] += pos[0] < c ? 1 : -1;
+      if (pos[1] !== e) pos[1] += pos[1] < e ? 1 : -1;
+      fahrBild(260); await warte(270);
+      status(null, null);
+    }
+    return !abbruch;
+  }
+  async function gabel() { wagen.classList.add('aus'); await warte(450); }
+  async function gabelEin() { wagen.classList.remove('aus'); await warte(350); }
+  function teil(k) { const x = k.split('/'); return [+x[0], +x[1]]; }
+  function ende(status_, fehler, kl, txt) {
+    st = { status: status_, quit: nr, fehler: fehler }; laeuft = false; status(kl, txt); zeichne();
+  }
+  async function abbrechen() {
+    await gabelEin();
+    if (beladen) {
+      stoerung = 8; wagen.classList.add('stoer'); quit.hidden = false;
+      if (quelle) zellen[quelle].classList.add('unklar');
+      hint.textContent = 'Störung: Ladeeinheit auf der Gabel – quittieren, Bediener räumt in Hand ab';
+      ende(9, 6, 'err', '9 / Fehler 6 · Störung Ursache 8 – Auftrag ' + nr + ' mit Ladeeinheit abgebrochen');
+    } else {
+      ende(9, 6, 'err', '9 / Fehler 6 – Auftrag ' + nr + ' abgebrochen, RBG bleibt stehen');
+      hint.textContent = 'Abgebrochen – das RBG fährt erst mit dem nächsten Auftrag weiter';
+    }
+  }
+
+  async function lauf() {
+    if (send.disabled) return;
+    nr++; laeuft = true; abbruch = false; zeichne();
+    const q = art === 1 ? [0, 1] : teil(quelle), z = art === 2 ? [0, 1] : teil(ziel);
+    const w = [1, 1, art, nr, q[0], q[1], 1, z[0], z[1], 1];
+    telegramm(w, 'LVS → RBG');
+    log('lvs', 'LVS → RBG', ['', 'Einlagern', 'Auslagern', 'Umlagern'][art] + ' · Nr ' + nr + ' · ' + q.join('/') + ' → ' + z.join('/'));
+    hint.textContent = 'Auftrag ' + nr + ' läuft …';
+    await warte(250); st = { status: 1, quit: st.quit, fehler: 0 }; status(null, 'Status 1 – Auftrag ' + nr + ' angenommen');
+    // zur Quelle
+    if (!await fahre(q[0], q[1])) return abbrechen();
+    await gabel(); if (abbruch) return abbrechen();
+    const qk = q.join('/'), voll = q[0] === 0 ? ein : fach[qk];
+    if (!voll) { await gabelEin(); return ende(9, 2, 'err', '9 / Fehler 2 – Quelle ' + qk + ' ist leer'), heim(); }
+    if (q[0] === 0) { ein = false; setTimeout(function () { ein = true; zeichne(); }, RUHIG ? 0 : 2500); } else fach[qk] = false;
+    beladen = true; wagen.classList.add('beladen'); zeichne(); await gabelEin();
+    status(null, 'beladen an ' + qk);
+    // zum Ziel
+    if (!await fahre(z[0], z[1])) return abbrechen();
+    const zk = z.join('/');
+    if (z[0] !== 0 && fach[zk]) {
+      log('err', 'RBG', 'Ziel ' + zk + ' belegt – bringt die Ladeeinheit zurück');
+      const r = art === 1 ? [0, 1] : q;
+      if (!await fahre(r[0], r[1])) return abbrechen();
+      await gabel(); if (r[0] === 0) ein = true; else fach[r.join('/')] = true;
+      beladen = false; wagen.classList.remove('beladen'); await gabelEin();
+      ende(9, 1, 'err', '9 / Fehler 1 – Ziel ' + zk + ' belegt'); return heim();
+    }
+    await gabel(); if (abbruch) return abbrechen();
+    if (z[0] === 0) { aus = true; setTimeout(function () { aus = false; zeichne(); }, RUHIG ? 0 : 3000); } else fach[zk] = true;
+    beladen = false; wagen.classList.remove('beladen'); zeichne(); await gabelEin();
+    ende(2, 0, 'ok', 'Status 2 – fertig · Quittung ' + nr);
+    quelle = ziel = null; zeichne(); heim();
+  }
+  async function heim() {   // nach "fertig" bzw. Fehler zurück in die Vorzone (nicht nach einem Abbruch)
+    await warte(500); if (laeuft || stoerung) return;
+    await fahre(0, 1); status(null, 'zurück in der Vorzone, bereit'); zeichne();
+  }
+
+  send.addEventListener('click', lauf);
+  abort.addEventListener('click', function () {
+    if (!laeuft || abbruch) return; abbruch = true;
+    log('lvs', 'LVS → RBG', 'Typ 4 – Auftrag ' + nr + ' abbrechen');
+  });
+  quit.addEventListener('click', function () {
+    stoerung = 0; beladen = false; wagen.className = 'wagen'; quit.hidden = true;
+    document.querySelectorAll('.fach.unklar').forEach(function (z) { z.classList.remove('unklar'); });
+    log('lvs', 'LVS → RBG', 'Typ 3 – Quittieren · Bediener hat die Ladeeinheit abgeräumt');
+    st = { status: st.status, quit: st.quit, fehler: st.fehler }; quelle = ziel = null; status(null, 'Störung weg'); zeichne();
+  });
+  reset.addEventListener('click', neu);
+  document.addEventListener('keydown', function (e) {
+    if (document.getElementById('lightbox').open) return;
+    const r = document.getElementById('demo').getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;            // nur, wenn die Demo zu sehen ist
+    if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if (e.key === 'Enter' && !send.disabled && !(e.target.closest && e.target.closest('button'))) { e.preventDefault(); lauf(); }
+    if (e.key === 'Escape' && laeuft) { e.preventDefault(); abort.click(); }
+  });
+  neu();
 })();
 </script>
 </body>
