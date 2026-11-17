@@ -6,7 +6,7 @@
 <title>Taktloss – Werkzeuge für SPS und Fördertechnik</title>
 <meta name="description" content="SPS-Agent, KonviaSim, SPS-Git, Lagerverwaltung, SchaltWerk und weitere Werkzeuge für SPS-Programmierung, Simulation und Inbetriebnahme von Förderanlagen.">
 <meta name="color-scheme" content="dark light">
-<link rel="icon" href="img/konviasim.svg" type="image/svg+xml">
+<link rel="icon" href="img/sps-agent.svg" type="image/svg+xml">
 <style>
 /* Farben: Catppuccin Mocha (dunkel) und Latte (hell), MIT-Lizenz, github.com/catppuccin/palette */
 :root {
@@ -183,6 +183,7 @@ nav.links a.aktiv { color:var(--text); box-shadow:inset 0 -2px 0 var(--mauve); }
 pre.term .cursor { display:inline-block; width:.55em; background:var(--mauve); animation:blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity:0; } }
 
+.h2logo { width:44px; height:44px; vertical-align:-9px; margin-right:12px; border-radius:10px; }
 /* Filter */
 .filter { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:-18px 0 26px; }
 .filter button { font:inherit; font-size:14px; border:1px solid var(--surface1); background:var(--mantle); color:var(--subtext); border-radius:999px; padding:4px 14px; cursor:pointer; }
@@ -331,7 +332,7 @@ kbd { font-family:"Cascadia Code",Consolas,monospace; font-size:11px; border:1px
 
 <section id="sps-agent">
   <div class="wrap">
-    <h2>SPS-Agent – die Zentrale</h2>
+    <h2><img class="h2logo" src="img/sps-agent.svg" alt="">SPS-Agent – die Zentrale</h2>
     <p class="sub">Ein KI-Assistent im Browser für Förderanlagen mit TIA Portal (S7-1500/1500F, WinCC Unified). Er arbeitet <i>mit</i> dir: Lesen geht ohne Rückfrage, alles was ändert, erscheint als Karte zum Erlauben oder Ablehnen.</p>
     <div class="agent-grid">
       <div class="pane">
@@ -352,8 +353,8 @@ kbd { font-family:"Cascadia Code",Consolas,monospace; font-size:11px; border:1px
         <h3>Programme</h3>
         <p>Installiert KonviaSim, PLCSIM-Brücke, SPS-Git, Lagerverwaltung und SchaltWerk als fertige Pakete – ohne Entwicklungsumgebung, mit Startmenü-Eintrag – und zeigt, wenn es ein Update gibt.</p>
         <pre class="term"><span class="k">☰ Werkzeuge</span>
-  KonviaSim       <span class="s">v0.17.5 aktuell</span>
-  Lagerverwaltung <span class="k">Update auf v0.7.5</span>
+  KonviaSim       <span class="s">v0.17.6 aktuell</span>
+  Lagerverwaltung <span class="k">Update auf v0.7.6</span>
   SchaltWerk      Installieren (v0.3.0)</pre>
       </div>
     </div>

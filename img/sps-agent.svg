@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="SPS-Agent">
+  <title>SPS-Agent</title><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26363F"/><stop offset="1" stop-color="#151F26"/></linearGradient><linearGradient id="vi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B3FF"/><stop offset="1" stop-color="#8B6FE8"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <path d="M122 214L136 92L218 160Z M390 214L376 92L294 160Z" fill="#E6EBEE" stroke="#E6EBEE" stroke-width="20" stroke-linejoin="round"/>
+  <path d="M150 178L156 128L190 158Z M362 178L356 128L322 158Z" fill="#A78BFA"/>
+  <rect x="112" y="150" width="288" height="250" rx="64" fill="#E6EBEE"/>
+  <rect x="148" y="196" width="216" height="118" rx="40" fill="#1B2730"/>
+  <path d="M176 254Q206 222 236 254Q206 286 176 254Z" fill="url(#vi)"/>
+  <path d="M276 254Q306 222 336 254Q306 286 276 254Z" fill="url(#vi)"/>
+  <rect x="200" y="236" width="12" height="36" rx="6" fill="#1B2730"/>
+  <rect x="300" y="236" width="12" height="36" rx="6" fill="#1B2730"/>
+  <path d="M244 334L268 334L256 348Z" fill="#7F929E" stroke="#7F929E" stroke-width="8" stroke-linejoin="round"/>
+  <g fill="none" stroke="#A78BFA" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M196 344H130L104 318H70M196 364H70"/>
+    <path d="M316 344H382L408 318H442M316 364H442"/>
+  </g>
+  <g fill="#A78BFA"><circle cx="62" cy="318" r="12"/><circle cx="62" cy="364" r="12"/><circle cx="450" cy="318" r="12"/><circle cx="450" cy="364" r="12"/></g>
+  <rect x="236" y="378" width="40" height="10" rx="5" fill="#3DDC84"/>
+</svg>
