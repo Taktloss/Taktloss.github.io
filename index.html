@@ -255,8 +255,8 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
         <h3>Programme</h3>
         <p>Installiert KonviaSim, PLCSIM-Brücke, SPS-Git, Lagerverwaltung und SchaltWerk als fertige Pakete – ohne Entwicklungsumgebung, mit Startmenü-Eintrag – und zeigt, wenn es ein Update gibt.</p>
         <pre class="term"><span class="k">☰ Werkzeuge</span>
-  KonviaSim       <span class="s">v0.17.3 aktuell</span>
-  Lagerverwaltung <span class="k">Update auf v0.7.0</span>
+  KonviaSim       <span class="s">v0.17.4 aktuell</span>
+  Lagerverwaltung <span class="k">Update auf v0.7.2</span>
   SchaltWerk      Installieren (v0.3.0)</pre>
       </div>
     </div>
@@ -276,7 +276,7 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
       <ul class="checks">
         <li><b>Layout in 2D, Anlage in 3D</b> – Rollen- und Gurtförderer, Eckumsetzer, Drehtische, Senkrechtförderer, Umreifer, Stapler, Verfahrwagen und Regalbediengeräte (Kleinteilelager und Hochregal); neu: Schnelllauf- und Brandschutztore, Aufzug mit Schachttüren, Sortierband mit Pushern, Tank mit Mischer</li>
         <li><b>Mit echter SPS-Logik</b> – Kopplung an eine simulierte S7-1500 (PLCSIM Advanced, auch über das Netz) oder eine eingebaute Schein-SPS zum Ausprobieren ohne TIA; hängt sich an eine laufende PLCSIM-Instanz an, ohne sie auszuschalten, und behandelt die Ausgänge im STOP wie eine echte CPU</li>
-        <li><b>Regalbediengerät mit einzelnen Achsen</b> – die SPS fährt Fahren, Heben und Gabel selbst über Positionsschalter, mit Fachbelegung, Lastaufnahme und Ein-/Auslagerförderern; KI-Werkzeuge lesen und setzen Belegung und Position für gezielte Tests</li>
+        <li><b>Regalbediengerät mit einzelnen Achsen</b> – die SPS fährt Fahren, Heben und Gabel selbst über Positionsschalter, mit Fachbelegung, Lastaufnahme und Ein-/Auslagerförderern – übernommen wird im ganzen Bereich des Positionsschalters, wie an der echten Anlage; KI-Werkzeuge lesen und setzen Belegung und Position für gezielte Tests</li>
         <li><b>Kopplung einrichten mit Assistent</b> – Weg wählen, Verbindung testen (mit Hinweisen, woran es hakt), Signale zuordnen und im Testlauf sehen, ob die SPS die Lichtschranke sieht: „Warum bewegt sich nichts?“ Schritt für Schritt</li>
         <li><b>Signale, die man sieht</b> – Lichtschranken, Motoren, Not-Halt, Schutztüren, Scanner, Zahlenwerte (INT); Signalverlauf, Statistik und Meldungen</li>
         <li><b>Layout aus Bild</b> – Skizze oder Foto eines Hallenplans laden, die KI zeichnet daraus Förderer und Kurven (auch über Claude Code, ohne eigenen API-Schlüssel)</li>
@@ -334,7 +334,8 @@ dialog.lightbox p { color:#cdd6f4; text-align:center; margin:10px 0 0; font-size
             <li><b>Absturzsicher</b> – ein Wächter startet nach Absturz oder Hänger neu und setzt offene Aufträge sicher fort, ohne einen Fahrauftrag doppelt zu schicken; automatische Sicherungen</li>
             <li>Lageransicht mit zuschaltbaren Infos: Menge, Alter, Quelle und Ziel offener Aufträge, Füllgrad, Auftragsliste, RBG live</li>
             <li>Kopplung per OPC UA oder TCP-Telegramm, mit Lebenszeichen und Wiederverbinden; Telegramm-Verlauf je Gasse für die Fehlersuche an der SPS</li>
-            <li><b>SPS-Neustart erkennen</b> – meldet die SPS „Anlauf“ mitten im Auftrag, wird er als Fehler gebucht und die Fächer als unklar markiert; Störung quittieren aus der Lagerverwaltung, gestartet wird an der Anlage</li>
+            <li><b>SPS-Neustart erkennen</b> – meldet die SPS „Anlauf“ mitten im Auftrag, wird er als Fehler gebucht und die Fächer als unklar markiert; Störung quittieren aus der Lagerverwaltung, gestartet wird an der Anlage; Position „unbekannt“, solange die SPS nach dem Anlauf ihre Referenzfahrt macht</li>
+            <li><b>Hängenden Auftrag erkennen</b> – meldet die SPS „in Arbeit“ ohne laufenden Auftrag (z. B. nach erzwungenem Abbruch), nennt die Lagerverwaltung Auftragsnummer und Abhilfe statt nur „RBG nicht bereit“</li>
             <li><b>KI-Schnittstelle</b> – eine KI liest Zustand, Aufträge und Telegramme; bedienen darf sie nur nach ausdrücklicher Freigabe, jede Aktion steht im Protokoll</li>
             <li>Eingebautes Test-RBG zum Ausprobieren ohne Steuerung</li>
             <li>Einrichtungsassistent: Lager anlegen, Anbindung wählen, Verbindung testen, Probeauftrag</li>
